@@ -10,21 +10,20 @@ package ch.ethz.fcl.urbanfusion.model.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ethz.fcl.urbanfusion.model.SingaporeScenario;
+import ch.ethz.fcl.urbanfusion.model.SGModel;
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Point2D;
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Polygon;
 import ch.ethz.fcl.urbanfusion.util.MathUtil;
 import ch.fhnw.ether.scene.mesh.DefaultMesh;
 import ch.fhnw.ether.scene.mesh.IMesh;
 import ch.fhnw.ether.scene.mesh.IMesh.Primitive;
-import ch.fhnw.ether.scene.mesh.IMesh.Queue;
 import ch.fhnw.ether.scene.mesh.geometry.DefaultGeometry;
 import ch.fhnw.ether.scene.mesh.material.ColorMaterial;
 import ch.fhnw.ether.scene.mesh.material.LineMaterial;
 import ch.fhnw.util.color.RGBA;
 
 public class MapLoader {
-	SingaporeScenario ss;
+	SGModel ss;
 
 	private float world_min_x = Float.MAX_VALUE, world_min_y = Float.MAX_VALUE,
 			world_max_x = Float.MIN_VALUE, world_max_y = Float.MIN_VALUE;
@@ -34,11 +33,11 @@ public class MapLoader {
 	private IMesh map_mesh = null;
 	private List<IMesh> boundary_mesh_list = null;
 
-	public MapLoader(SingaporeScenario ss) {
+	public MapLoader(SGModel ss) {
 		this.ss = ss;
 	}
 
-	public void init() {
+	public void load() {
 		loadMapZones();
 		loadMapBoundary();
 	}

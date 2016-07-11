@@ -25,38 +25,31 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ch.ethz.fcl.urbanfusion.model.SingaporeScenario;
+import ch.ethz.fcl.urbanfusion.model.SGModel;
 import ch.ethz.fcl.urbanfusion.model.road.basemap.Edge;
 import ch.ethz.fcl.urbanfusion.model.road.basemap.Node;
 import ch.fhnw.ether.scene.mesh.DefaultMesh;
 import ch.fhnw.ether.scene.mesh.IMesh;
 import ch.fhnw.ether.scene.mesh.IMesh.Primitive;
-import ch.fhnw.ether.scene.mesh.IMesh.Queue;
 import ch.fhnw.ether.scene.mesh.geometry.DefaultGeometry;
 import ch.fhnw.ether.scene.mesh.material.ColorMaterial;
 import ch.fhnw.util.color.RGBA;
 
 public class RoadLoader {
-	SingaporeScenario ss;
+	SGModel ss;
 
 	private Map<String, Node> node_map = null; // key: node id; value: node
 
 	private List<Edge> edges = null;
 	private IMesh road_mesh = null;
 
-	private List<Node> mrtNodes;
-
-	public RoadLoader(SingaporeScenario ss) {
+	public RoadLoader(SGModel ss) {
 		this.ss = ss;
-
 		node_map = new HashMap<String, Node>();
-
 		edges = new ArrayList<Edge>();
-
-		mrtNodes = new ArrayList<Node>();
 	}
 
-	public void init() {
+	public void load() {
 		loadRoad();
 		generateRoadMesh();
 	}
@@ -120,6 +113,15 @@ public class RoadLoader {
 		for (int index = 0; index < public_transit_edges.size(); index++) {
 			Edge e = public_transit_edges.get(index);
 
+			String id = e.getId();
+			if (id.contains("EW") || id.contains("NS") || id.contains("NE")
+					|| id.contains("CC") || id.contains("CG")
+					|| id.contains("PE") || id.contains("PTC")
+					|| id.contains("SE") || id.contains("SW")
+					|| id.contains("SEN")) {
+				continue;
+			}
+
 			// add edge in the edge mesh
 			vertices[index * 6 + 0] = ss.getMap().getViewX(e.getStart().getX());
 			vertices[index * 6 + 1] = ss.getMap().getViewY(e.getStart().getY());
@@ -132,7 +134,7 @@ public class RoadLoader {
 
 		DefaultGeometry g = DefaultGeometry.createV(vertices);
 		road_mesh = new DefaultMesh(Primitive.LINES,
-				new ColorMaterial(new RGBA(1, 1, 1, 1f)), g);
+				new ColorMaterial(new RGBA(1, 1, 1, 0.1f)), g);
 		road_mesh.setName("Road Network");
 	}
 
@@ -151,14 +153,6 @@ public class RoadLoader {
 				System.out.println(id);
 
 			node_map.put(id, node);
-
-			if (id.contains("EW") || id.contains("NS") || id.contains("NE")
-					|| id.contains("CC") || id.contains("CG")
-					|| id.contains("PE") || id.contains("PTC")
-					|| id.contains("SE") || id.contains("SW")
-					|| id.contains("SEN")) {
-				mrtNodes.add(node);
-			}
 
 		} catch (NumberFormatException e) {
 			System.out.println(
@@ -187,10 +181,6 @@ public class RoadLoader {
 
 	public List<Edge> getEdges() {
 		return edges;
-	}
-
-	public List<Node> getMRTNodes() {
-		return mrtNodes;
 	}
 
 	public IMesh getRoadMesh() {

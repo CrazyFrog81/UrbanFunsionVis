@@ -7,7 +7,10 @@
 
 package ch.ethz.fcl.urbanfusion.main;
 
-import ch.ethz.fcl.urbanfusion.model.SingaporeScenario;
+import java.io.IOException;
+
+import ch.ethz.fcl.urbanfusion.model.SGModel;
+import ch.ethz.fcl.urbanfusion.ui.SGUI;
 import ch.fhnw.ether.controller.DefaultController;
 import ch.fhnw.ether.controller.IController;
 import ch.fhnw.ether.scene.DefaultScene;
@@ -24,8 +27,8 @@ public class UrbanFusionVis {
 	}
 
 	public UrbanFusionVis() {
-		SingaporeScenario ss = new SingaporeScenario();
-		ss.init();
+		SGModel sm = new SGModel();
+		SGUI ui = new SGUI(sm);
 
 		// Create controller
 		IController controller = new DefaultController();
@@ -39,13 +42,15 @@ public class UrbanFusionVis {
 			controller.setScene(scene);
 
 			// Create and add camera
-			ICamera camera = new Camera(new Vec3(0, 0, 2), Vec3.ZERO);
+			ICamera camera = new Camera(new Vec3(0, 0, 1.5), Vec3.ZERO);
 			scene.add3DObject(camera);
 			controller.setCamera(view, camera);
 
-			scene.add3DObjects(ss.getMap().getMapMesh());
-			scene.add3DObjects(ss.getMap().getBoundaryMeshs());
-			scene.add3DObject(ss.getRoad().getRoadMesh());
+			try {
+				ui.enable(controller);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		});
 	}
 }
