@@ -285,10 +285,6 @@ public class Polygon implements IObject2D {
 		return intersectPoints;
 	}
 
-	@Override
-	public void render() {
-	}
-
 	public List<Point2D> getPoints() {
 		return points;
 	}

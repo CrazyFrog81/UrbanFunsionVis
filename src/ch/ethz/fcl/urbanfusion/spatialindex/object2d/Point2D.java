@@ -9,8 +9,6 @@ package ch.ethz.fcl.urbanfusion.spatialindex.object2d;
 
 import javax.vecmath.Vector2d;
 
-import org.lwjgl.opengl.GL11;
-
 import ch.ethz.fcl.urbanfusion.util.VectorUtil;
 
 public class Point2D implements IObject2D {
@@ -72,11 +70,6 @@ public class Point2D implements IObject2D {
 	@Override
 	public Rectangle getBound() {
 		return new Rectangle(x, y, x, y);
-	}
-
-	@Override
-	public void render() {
-		GL11.glVertex3f(x, y, 0);
 	}
 
 	@Override

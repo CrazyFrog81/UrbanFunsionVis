@@ -9,10 +9,6 @@ package ch.ethz.fcl.urbanfusion.spatialindex.object3d;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Disk;
-import org.lwjgl.util.glu.GLU;
-
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Circle;
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Point2D;
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Rectangle;
@@ -190,59 +186,5 @@ public class Cylinder implements IObject3D {
 		if (getCenterZ() < end && (getCenterZ() + height) >= start)
 			return true;
 		return false;
-	}
-
-	@Override
-	public void render() {
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-		Disk disk = new Disk();
-		Disk disk2 = new Disk();
-		GL11.glPushMatrix();
-		
-		int slices = 64;
-		int stacks = 32;
-		int loops = 32;
-		float r = 0.5f;
-		float g = 0.75f;
-		float b = 1.0f;
-		float r2 = 0.5f * 0.5f;
-		float g2 = 0.5f * 0.75f;
-		float b2 = 0.5f * 1.0f;
-
-		GL11.glLineWidth(1.2f);
-		GL11.glPushMatrix();
-		GL11.glTranslatef(getCenterX(), getCenterY(), getCenterZ());
-		// GL11.glRotatef(-90, 1, 0, 0);
-
-		GL11.glColor4f(r, g, b, 0.2f);
-		disk.setDrawStyle(GLU.GLU_FILL);
-		disk.draw(0, getRadius(), slices, loops);
-		GL11.glColor4f(r2, g2, b2, 1f);
-		disk.setDrawStyle(GLU.GLU_SILHOUETTE);
-		disk.draw(0, getRadius(), slices, loops);
-
-		GL11.glPushMatrix();
-		GL11.glTranslatef(0, 0, getHeight());
-		GL11.glColor4f(r, g, b, 0.2f);
-		disk2.setDrawStyle(GLU.GLU_FILL);
-		disk2.draw(0, getRadius(), slices, loops);
-		GL11.glColor4f(r2, g2, b2, 1f);
-		disk2.setDrawStyle(GLU.GLU_SILHOUETTE);
-		disk2.draw(0, getRadius(), slices, loops);
-		GL11.glPopMatrix();
-
-		if (true) {
-			org.lwjgl.util.glu.Cylinder cylinder = new org.lwjgl.util.glu.Cylinder();
-			GL11.glColor4f(r, g, b, 0.1f);
-			
-			cylinder.setDrawStyle(GLU.GLU_FILL);
-			cylinder.draw(getRadius(), getRadius(), getHeight(),
-					slices, stacks);
-		}
-
-		GL11.glPopMatrix();
-		GL11.glPopMatrix();
-		GL11.glDisable(GL11.GL_BLEND);
 	}
 }

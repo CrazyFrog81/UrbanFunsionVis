@@ -12,5 +12,4 @@ public interface IObject2D{
 	public boolean contains(Rectangle rec);
 	public boolean contains(Point2D point);
 	public Rectangle getBound();
-	public void render();
 }

@@ -9,10 +9,7 @@ package ch.ethz.fcl.urbanfusion.spatialindex.object3d;
 
 import java.nio.FloatBuffer;
 
-import org.lwjgl.opengl.GL11;
-
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Rectangle;
-import ch.ethz.fcl.urbanfusion.util.StringUtil;
 
 public class BoundingBox implements IObject3D {
 	private float minX;
@@ -263,48 +260,6 @@ public class BoundingBox implements IObject3D {
 	@Override
 	public BoundingBox getBoundingBox() {
 		return this;
-	}
-
-	@Override
-	public void render() {
-		StringUtil.debug(toString(), false);
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3d(minX, minY, minZ);
-		GL11.glVertex3d(minX, maxY, minZ);
-
-		GL11.glVertex3d(minX, minY, minZ);
-		GL11.glVertex3d(maxX, minY, minZ);
-
-		GL11.glVertex3d(maxX, maxY, minZ);
-		GL11.glVertex3d(maxX, minY, minZ);
-
-		GL11.glVertex3d(minX, maxY, minZ);
-		GL11.glVertex3d(maxX, maxY, minZ);
-
-		GL11.glVertex3d(minX, minY, maxZ);
-		GL11.glVertex3d(minX, maxY, maxZ);
-
-		GL11.glVertex3d(minX, minY, maxZ);
-		GL11.glVertex3d(maxX, minY, maxZ);
-
-		GL11.glVertex3d(maxX, maxY, maxZ);
-		GL11.glVertex3d(maxX, minY, maxZ);
-
-		GL11.glVertex3d(minX, maxY, maxZ);
-		GL11.glVertex3d(maxX, maxY, maxZ);
-
-		GL11.glVertex3d(minX, minY, minZ);
-		GL11.glVertex3d(minX, minY, maxZ);
-
-		GL11.glVertex3d(minX, maxY, minZ);
-		GL11.glVertex3d(minX, maxY, maxZ);
-
-		GL11.glVertex3d(maxX, minY, minZ);
-		GL11.glVertex3d(maxX, minY, maxZ);
-
-		GL11.glVertex3d(maxX, maxY, minZ);
-		GL11.glVertex3d(maxX, maxY, maxZ);
-		GL11.glEnd();
 	}
 
 	public static void bufferBoundingBox(FloatBuffer buffer, float[] attributes) {

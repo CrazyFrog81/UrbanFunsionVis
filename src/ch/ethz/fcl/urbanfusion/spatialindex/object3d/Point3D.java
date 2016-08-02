@@ -7,8 +7,6 @@
 
 package ch.ethz.fcl.urbanfusion.spatialindex.object3d;
 
-import org.lwjgl.opengl.GL11;
-
 public class Point3D implements IObject3D {
 	private float x;
 	private float y;
@@ -92,10 +90,5 @@ public class Point3D implements IObject3D {
 	@Override
 	public boolean contains(BoundingBox bb) {
 		return false;
-	}
-
-	@Override
-	public void render() {
-		GL11.glVertex3f(x, y, z);
 	}
 }

@@ -9,10 +9,6 @@ package ch.ethz.fcl.urbanfusion.spatialindex.object2d;
 
 import javax.vecmath.Vector2d;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Disk;
-import org.lwjgl.util.glu.GLU;
-
 import ch.ethz.fcl.urbanfusion.spatialindex.object3d.Point3D;
 
 public class Circle implements IObject2D {
@@ -144,77 +140,5 @@ public class Circle implements IObject2D {
 
 	public float getRadius() {
 		return this.radius;
-	}
-
-	@Override
-	public void render() {
-		Disk disk = new Disk();
-
-		int slices = 64;
-		int loops = 32;
-
-		GL11.glLineWidth(1.2f);
-		GL11.glPushMatrix();
-		GL11.glTranslatef(getCenter().getX(), getCenter().getY(), 0);
-
-		disk.setDrawStyle(GLU.GLU_SILHOUETTE);
-		disk.draw(0, getRadius(), slices, loops);
-		disk.setDrawStyle(GLU.GLU_FILL);
-		disk.draw(0, getRadius(), slices, loops);
-
-		GL11.glPopMatrix();
-	}
-
-	public void rendInter(Circle other, float width) {
-		GL11.glPushMatrix();
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-		GL11.glEnable(GL11.GL_LINE_SMOOTH);
-		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
-		GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
-
-		float y_diff = other.center.getY() - this.center.getY();
-		float x_diff = other.center.getX() - this.center.getX();
-
-		float angle = (float) Math.atan(y_diff / x_diff);
-
-		float this_x = 0, this_y = 0, other_x = 0, other_y = 0;
-		if (this.radius >= other.radius) {
-			this_x = this.center.getX() - this.radius / 2
-					* (float) Math.sin(angle);
-			this_y = this.center.getY() + this.radius / 2
-					* (float) Math.cos(angle);
-			other_x = other.center.getX() - other.radius / 2
-					* (float) Math.sin(angle);
-			other_y = other.center.getY() + other.radius / 2
-					* (float) Math.cos(angle);
-		} else {
-			this_x = this.center.getX() + this.radius / 2
-					* (float) Math.sin(angle);
-			this_y = this.center.getY() - this.radius / 2
-					* (float) Math.cos(angle);
-			other_x = other.center.getX() + other.radius / 2
-					* (float) Math.sin(angle);
-			other_y = other.center.getY() - other.radius / 2
-					* (float) Math.cos(angle);
-		}
-
-		// GL11.glBegin(GL11.GL_POLYGON);
-		// GL11.glVertex3f(this.center.getX(), this.center.getY(), 0);
-		// GL11.glVertex3f(this_x, this_y, 0);
-		// GL11.glVertex3f(other_x, other_y, 0);
-		// GL11.glVertex3f(other.center.getX(), other.center.getY(), 0);
-		// GL11.glEnd();
-
-		GL11.glLineWidth(width);
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3f(this_x, this_y, 0);
-		GL11.glVertex3f(other_x, other_y, 0);
-
-		GL11.glEnd();
-
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glPopMatrix();
 	}
 }

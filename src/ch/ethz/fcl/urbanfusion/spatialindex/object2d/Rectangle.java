@@ -7,8 +7,6 @@
 
 package ch.ethz.fcl.urbanfusion.spatialindex.object2d;
 
-import org.lwjgl.opengl.GL11;
-
 public class Rectangle implements IObject2D {
 	private float minX;
 	private float minY;
@@ -203,35 +201,6 @@ public class Rectangle implements IObject2D {
 	@Override
 	public Rectangle getBound() {
 		return this;
-	}
-
-	@Override
-	public void render() {
-		GL11.glBegin(GL11.GL_LINES);
-
-		GL11.glVertex2f(minX, minY);
-		GL11.glVertex2f(minX, maxY);
-
-		GL11.glVertex2f(minX, minY);
-		GL11.glVertex2f(maxX, minY);
-
-		GL11.glVertex2f(maxX, maxY);
-		GL11.glVertex2f(minX, maxY);
-
-		GL11.glVertex2f(maxX, maxY);
-		GL11.glVertex2f(maxX, minY);
-
-		GL11.glEnd();
-	}
-
-	public void render(int type) {
-		GL11.glBegin(type);
-		GL11.glVertex2f(minX, minY);
-		GL11.glVertex2f(minX, maxY);
-		GL11.glVertex2f(maxX, maxY);
-		GL11.glVertex2f(maxX, minY);
-		GL11.glVertex2f(minX, minY);
-		GL11.glEnd();
 	}
 
 	@Override

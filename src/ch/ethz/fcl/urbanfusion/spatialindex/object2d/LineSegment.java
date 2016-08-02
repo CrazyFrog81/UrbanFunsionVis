@@ -10,8 +10,6 @@ package ch.ethz.fcl.urbanfusion.spatialindex.object2d;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
 import ch.ethz.fcl.urbanfusion.spatialindex.object3d.Point3D;
 import ch.ethz.fcl.urbanfusion.util.StringUtil;
 
@@ -318,14 +316,6 @@ public class LineSegment implements IObject2D {
 	@Override
 	public Rectangle getBound() {
 		return new Rectangle(start, end);
-	}
-
-	@Override
-	public void render() {
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3f(start.getX(), start.getY(), 0);
-		GL11.glVertex3f(end.getX(), end.getY(), 0);
-		GL11.glEnd();
 	}
 
 	@Override

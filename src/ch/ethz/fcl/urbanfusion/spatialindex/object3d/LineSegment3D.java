@@ -7,8 +7,6 @@
 
 package ch.ethz.fcl.urbanfusion.spatialindex.object3d;
 
-import org.lwjgl.opengl.GL11;
-
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Point2D;
 import ch.ethz.fcl.urbanfusion.spatialindex.object2d.Rectangle;
 
@@ -101,13 +99,5 @@ public class LineSegment3D implements IObject3D {
 	
 	public int getID(){
 		return this.id;
-	}
-
-	@Override
-	public void render() {
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3f(p1.getX(), p1.getY(), p1.getZ());
-		GL11.glVertex3f(p2.getX(), p2.getY(), p2.getZ());
-		GL11.glEnd();
 	}
 }
